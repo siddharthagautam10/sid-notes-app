@@ -31,12 +31,13 @@ router.get('/', auth, async (req, res) => {
 
 router.delete('/:id', auth, async (req, res) => {
   try {
+    console.log(req)
     const note = await Note.findById(req.params.id);
     if (!note) return res.status(404).json({ msg: 'Note not found' });
 
     if (note.userId.toString() !== req.user.id) return res.status(401).json({ msg: 'User not authorized' });
 
-    await note.remove();
+    await note.deleteOne();
     res.json({ msg: 'Note removed' });
   } catch (err) {
     console.error(err.message);

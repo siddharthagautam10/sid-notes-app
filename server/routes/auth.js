@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const auth = require('../middleware/auth');
 const router = express.Router();
+require('dotenv').config();
 
 const secret = process.env.JWT_SECRET;
 
@@ -22,7 +23,7 @@ router.post('/register', async (req, res) => {
     const payload = { user: { id: user.id } };
     jwt.sign(payload, secret, { expiresIn: 3600 }, (err, token) => {
       if (err) throw err;
-      res.json({ token });
+      res.json({ token }); 
     });
   } catch (err) {
     console.error(err.message);
